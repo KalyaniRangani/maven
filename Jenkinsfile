@@ -5,7 +5,7 @@ pipeline
     agent any
     stages
     {
-        stage('continousdownload')
+        stage('download_master')
         {
             steps
             {
@@ -15,7 +15,7 @@ pipeline
                 }
             }
         }
-        stage('continousbuild')
+        stage('build_master')
         {
             steps
             {
@@ -25,7 +25,7 @@ pipeline
                 }
             }
         }
-        stage('continousdeploy')
+        stage('deploy_master')
         {
             steps
             {
@@ -35,7 +35,7 @@ pipeline
                 }
             }
         }
-        stage('continoustest')
+        stage('test_master')
         {
             steps
             {
@@ -46,7 +46,7 @@ pipeline
                 }
             }
         }
-        stage('continousdelivery')
+        stage('delivery_master')
         {
             steps
             {
