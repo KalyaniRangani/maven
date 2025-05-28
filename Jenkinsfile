@@ -5,7 +5,7 @@ pipeline
     agent any
     stages
     {
-        stage('continousdownload')
+        stage('download_sub')
         {
             steps
             {
@@ -15,7 +15,7 @@ pipeline
                 }
             }
         }
-        stage('continousbuild')
+        stage('build_sub')
         {
             steps
             {
