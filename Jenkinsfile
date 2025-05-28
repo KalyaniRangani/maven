@@ -1,3 +1,5 @@
+@Library('sharedlibrary')_
+
 pipeline
 {
     agent any
@@ -7,39 +9,57 @@ pipeline
         {
             steps
             {
-                git 'https://github.com/IntelliqDevops/maven.git'
+                script
+                {
+                    cicd.contdown("maven")
+                }
             }
         }
         stage('continousbuild')
         {
             steps
             {
-                sh 'mvn package'
+                script
+                {
+                    cicd.contbuild()
+                }
             }
         }
-        stage('continousdeployment')
+        stage('continousdeploy')
         {
             steps
             {
-                sh 'scp /var/lib/jenkins/workspace/Declarativepipeline1/webapp/target/webapp.war ubuntu@172.31.13.212:/var/lib/tomcat10/webapps/mytestapp.war'
+                script
+                {
+                    cicd.contdeploy("cicdlib","172.31.13.212","test1")
+                }
             }
         }
-        stage('continoustesting')
+        stage('continoustest')
         {
             steps
             {
-                git 'https://github.com/IntelliqDevops/FunctionalTesting.git'
-                sh 'java -jar /var/lib/jenkins/workspace/Declarativepipeline1/testing.jar'
-                
+                script
+                {
+                    cicd.contdown("FunctionalTesting")
+                    cicd.conttest("cicdlib")
+                }
             }
         }
         stage('continousdelivery')
         {
             steps
             {
-                sh 'scp /var/lib/jenkins/workspace/Declarativepipeline1/webapp/target/webapp.war ubuntu@172.31.2.210:/var/lib/tomcat10/webapps/myprodapp.war'
+                script
+                {
+                    cicd.contdeploy("cicdlib","172.31.2.210","prod1")
+                }
             }
         }
-        
     }
 }
+
+
+
+
+
